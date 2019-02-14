@@ -5,6 +5,9 @@ import cors from 'cors';
 import usuario from './src/schemas/usuarios'
 
 
+import { createToken } from './src/resolvers/create';
+import { verifyToken } from './src/resolvers/verify';
+
 const JsonParser = bodyParser.json();
 const app = express();
 const PORT = process.env.PORT || 6430
@@ -44,5 +47,19 @@ app.use('/verifyToken', JsonParser, (req,res)=> {
     }
 })
 
+app.use('/login', JsonParser, (req,res)=>{
+    if(req.method === 'POST'){
+        const token = createToken(req.body.correo, req.body.contrasena).then((token)=>{
+            res.status(200).json({token});
+        })
+        .catch((err)=>{
+            console.log(err)
+            res.status(403).json({
+                message: 'Login Failed INVALID CREDENTIALS'
+            })
+        })
+    }
+
+})
 
 
