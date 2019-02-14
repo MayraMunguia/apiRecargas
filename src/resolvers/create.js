@@ -17,7 +17,7 @@ export const createToken = (correo,contrasena) => {
     .then((usuario)=>{
         const compare = new Promise((resolve,reject)=>{
             bcrypt.compare(contrasena, usuario.contrasena, function(err,res){
-                if(res && usuario.activo == true){
+                if(res && usuario.activo == false){
                     const payload = {
                         correo: usuario.correo,
                         id: usuario._id
