@@ -12,6 +12,9 @@ mongoose.connect("mongodb://admin:admin123@ds135255.mlab.com:35255/recargasdb");
 
 const db = mongoose.connection;
 
+db.on('error',() => console.log('Failed to connect to mongoDB'))
+    .once('open',()=> console.log('Connected to MongoDB', PORT));
+
 app.get('/hola', (req,res) => {
     res.send("Hello hola");
 });
